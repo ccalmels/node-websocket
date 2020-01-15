@@ -21,7 +21,14 @@ app.use(session({
 }));
 
 app.get('/', function(req, res) {
-    res.render('index', { id: req.sessionID } );
+    if (!colors.length) {
+	res.send('too many people');
+    } else {
+	if (!req.session.color)
+	    req.session.color = colors.pop();
+
+	res.render('index', { id: req.sessionID, color: req.session.color } );
+    }
 });
 
 app.listen(3000, function() {

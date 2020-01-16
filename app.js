@@ -1,11 +1,14 @@
 const express = require('express');
 const session = require('express-session');
+const websocket = require('express-ws');
 const uuid = require('uuid/v4');
 const body_parser = require('body-parser');
 
 const colors = [ 'red', 'blue', 'black', 'grey' ];
 
 const app = express();
+
+const wss = websocket(app);
 
 app.set('view engine', 'pug');
 app.use(body_parser.urlencoded({ extended: false }));
@@ -29,6 +32,19 @@ app.get('/', function(req, res) {
 
 	res.render('index', { id: req.sessionID, color: req.session.color } );
     }
+});
+
+app.ws('/', function(ws, req) {
+    if (!req.session.color) {
+	ws.close();
+	return;
+    }
+
+    ws.on('message', function(msg) {
+	console.log(msg + ' from ' + req.session.color);
+    });
+
+    console.log('websocket opened from ' + req.session.color);
 });
 
 app.listen(3000, function() {

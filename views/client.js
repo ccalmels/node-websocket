@@ -5,6 +5,10 @@ ws.onerror = function(event) {
     alert('Websocket connection failed');
 };
 
+ws.onmessage = function(message) {
+    console.log(message);
+};
+
 var input = document.querySelector('#send_message');
 
 input.onkeypress = function(event) {

@@ -5,6 +5,7 @@ const uuid = require('uuid/v4');
 const body_parser = require('body-parser');
 
 const colors = [ 'red', 'blue', 'black', 'grey' ];
+const clients = [];
 
 const app = express();
 
@@ -40,8 +41,18 @@ app.ws('/', function(ws, req) {
 	return;
     }
 
+    clients.push(ws);
+
+    ws.on('close', function(client) {
+	clients.splice(clients.indexOf(client), 1);
+    });
+
     ws.on('message', function(msg) {
 	console.log(msg + ' from ' + req.session.color);
+
+	clients.forEach(function(client) {
+	    client.send('someone says \'' + msg + '\'');
+	});
     });
 
     console.log('websocket opened from ' + req.session.color);

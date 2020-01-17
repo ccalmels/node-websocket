@@ -7,8 +7,6 @@ ws.onerror = function(event) {
 };
 
 ws.onmessage = function(message) {
-    console.log(message);
-
     messages.innerHTML += message.data;
     messages.scrollTop = messages.scrollHeight;
 };

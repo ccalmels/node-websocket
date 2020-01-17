@@ -1,6 +1,16 @@
 var url = window.location.href.replace('http', 'ws');
 var ws = new WebSocket(url);
 
-ws.onopen = function(event) {
-    ws.send('hi!');
-}
+ws.onerror = function(event) {
+    alert('Websocket connection failed');
+};
+
+var input = document.querySelector('#send_message');
+
+input.onkeypress = function(event) {
+    if (event.which === 10 || event.which === 13) {
+	// send message to server
+	ws.send(input.value);
+	input.value = '';
+    }
+};

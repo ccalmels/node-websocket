@@ -9,5 +9,7 @@ html
 	body
 		h1 Welcome user
 		p.myself #{id} using #{color} color
+		label(for='send_message') Send:
+		input(type='text' id='send_message')
 		script
 			include client.js

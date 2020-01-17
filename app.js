@@ -52,16 +52,12 @@ app.ws('/', function(ws, req) {
     });
 
     ws.on('message', function(msg) {
-	console.log(msg + ' from ' + req.session.color);
-
 	var quoted = msg.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 
 	clients.forEach(function(client) {
 	    client.send('<p style="color:' +  req.session.color + ';">' + quoted + '</p>');
 	});
     });
-
-    console.log('websocket opened from ' + req.session.color);
 });
 
 app.listen(3000, function() {

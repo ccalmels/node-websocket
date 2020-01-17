@@ -6,9 +6,18 @@ html
 			.myself {
 			color: #{color};
 			}
+			#messages {
+			height: 50vh;
+			overflow-x: hidden;
+			overflow-x: auto;
+			}
+			p.server {
+			font-style: italic;
+			}
 	body
-		h1 Welcome user
+		h1 Welcome user #{color}
 		p.myself #{id} using #{color} color
+		div(id='messages')
 		label(for='send_message') Send:
 		input(type='text' id='send_message')
 		script

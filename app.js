@@ -41,6 +41,10 @@ app.ws('/', function(ws, req) {
 	return;
     }
 
+    clients.forEach(function(client) {
+	client.send('<p class="server">' + req.session.color + ' connected</p>');
+    });
+
     clients.push(ws);
 
     ws.on('close', function(client) {
@@ -51,7 +55,7 @@ app.ws('/', function(ws, req) {
 	console.log(msg + ' from ' + req.session.color);
 
 	clients.forEach(function(client) {
-	    client.send('someone says \'' + msg + '\'');
+	    client.send('<p style="color:' +  req.session.color + ';">' + msg + '</p>');
 	});
     });
 

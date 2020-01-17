@@ -1,5 +1,6 @@
 var url = window.location.href.replace('http', 'ws');
 var ws = new WebSocket(url);
+var messages = document.querySelector('#messages');
 
 ws.onerror = function(event) {
     alert('Websocket connection failed');
@@ -7,6 +8,9 @@ ws.onerror = function(event) {
 
 ws.onmessage = function(message) {
     console.log(message);
+
+    messages.innerHTML += message.data;
+    messages.scrollTop = messages.scrollHeight;
 };
 
 var input = document.querySelector('#send_message');
